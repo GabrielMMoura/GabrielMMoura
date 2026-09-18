@@ -41,9 +41,8 @@ def main():
         if count:
             title = count.group(1).replace(",", ".") + " contribuições no último ano"
     parts = [f'''<svg xmlns="http://www.w3.org/2000/svg" width="960" height="256" viewBox="0 0 960 256" role="img" aria-label="{escape(title)}">
-    <rect x="1" y="1" width="958" height="254" rx="18" fill="#0d1117" stroke="#30363d"/>
-    <g font-family="Arial, sans-serif"><text x="28" y="39" fill="#f0f6fc" font-size="20" font-weight="700">{escape(title)}</text>
-    <text x="28" y="63" fill="#8b949e" font-size="12">Atividade pública e contribuições privadas que você tornou visíveis no perfil</text>''']
+    <rect width="960" height="256" fill="#0d1117"/>
+    <g font-family="Arial, sans-serif"><text x="28" y="39" fill="#c9d1d9" font-size="18">{escape(title)}</text>''']
     months = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"]
     for day, level in sorted(parser.days.items()):
         if level not in range(5):
@@ -64,6 +63,24 @@ def main():
     target = ROOT / "assets" / "contributions.svg"
     target.parent.mkdir(parents=True, exist_ok=True)
     target.write_text("\n".join(parts), encoding="utf-8")
+    # Split the same year into two chronological rows on narrow screens.
+    mobile = [f'''<svg xmlns="http://www.w3.org/2000/svg" width="480" height="352" viewBox="0 0 480 352" role="img" aria-label="{escape(title)}">
+    <rect width="480" height="352" fill="#0d1117"/>
+    <g font-family="Arial, sans-serif"><text x="12" y="24" fill="#c9d1d9" font-size="16">{escape(title)}</text>''']
+    for day, level in sorted(parser.days.items()):
+        week = (day - start).days // 7
+        block, col = divmod(week, 27)
+        row = (day.weekday() + 1) % 7
+        x, y = 30 + col * 16, 61 + block * 138 + row * 16
+        if day.day == 1:
+            mobile.append(f'<text x="{x}" y="{y - row * 16 - 9}" fill="#8b949e" font-size="11">{months[day.month - 1]}</text>')
+        mobile.append(f'<rect x="{x}" y="{y}" width="12" height="12" rx="2" fill="{colors[level]}"><title>{day.isoformat()}: nível {level}/4</title></rect>')
+    mobile.append(f'<text x="12" y="336" fill="#8b949e" font-size="11">{date.today().isoformat()} · Dados: GitHub</text>')
+    mobile.append('<text x="300" y="336" fill="#8b949e" font-size="11">Menos</text>')
+    for i, color in enumerate(colors):
+        mobile.append(f'<rect x="{340 + i * 16}" y="326" width="12" height="12" rx="2" fill="{color}"/>')
+    mobile.append('<text x="428" y="336" fill="#8b949e" font-size="11">Mais</text></g></svg>')
+    target.with_name("contributions-mobile.svg").write_text("\n".join(mobile), encoding="utf-8")
     print(f"Calendar generated: {len(parser.days)} days")
 
 if __name__ == "__main__":

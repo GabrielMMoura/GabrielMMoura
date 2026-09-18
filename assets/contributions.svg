@@ -1,7 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="960" height="256" viewBox="0 0 960 256" role="img" aria-label="768 contribuições no último ano">
-    <rect x="1" y="1" width="958" height="254" rx="18" fill="#0d1117" stroke="#30363d"/>
-    <g font-family="Arial, sans-serif"><text x="28" y="39" fill="#f0f6fc" font-size="20" font-weight="700">768 contribuições no último ano</text>
-    <text x="28" y="63" fill="#8b949e" font-size="12">Atividade pública e contribuições privadas que você tornou visíveis no perfil</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="256" viewBox="0 0 960 256" role="img" aria-label="770 contribuições no último ano">
+    <rect width="960" height="256" fill="#0d1117"/>
+    <g font-family="Arial, sans-serif"><text x="28" y="39" fill="#c9d1d9" font-size="18">770 contribuições no último ano</text>
 <rect x="55" y="97" width="12" height="12" rx="3" fill="#21262d"><title>2025-09-14: nível de atividade 0/4</title></rect>
 <rect x="55" y="113" width="12" height="12" rx="3" fill="#21262d"><title>2025-09-15: nível de atividade 0/4</title></rect>
 <rect x="55" y="129" width="12" height="12" rx="3" fill="#21262d"><title>2025-09-16: nível de atividade 0/4</title></rect>
