@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="320" height="230" viewBox="0 0 320 230"><rect x="1" y="1" width="318" height="228" rx="18" fill="#0d1117" stroke="#30363d"/><g font-family="Arial, sans-serif"><text x="24" y="34" fill="#d2a8ff" font-size="10" letter-spacing="1">03 / VENDAS &amp; IA</text>
+ <text x="24" y="79" fill="#f0f6fc" font-size="28" font-weight="700">Mini CRM SDR</text>
+ <text x="24" y="114" fill="#c9d1d9" font-size="13">Funil Kanban, campanhas e</text><text x="24" y="135" fill="#c9d1d9" font-size="13">mensagens personalizadas com IA.</text>
+ <path d="M24 158 H296" stroke="#30363d"/>
+ <text x="24" y="185" fill="#8b949e" font-size="11">TypeScript · Supabase</text><text x="24" y="205" fill="#8b949e" font-size="11">Multi-tenancy · IA</text></g></svg>
