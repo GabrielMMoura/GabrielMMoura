@@ -2,87 +2,82 @@
 
 # Gabriel Moura
 
-**Full Stack Developer**
+**Software Engineer · Full Stack**
 
-Construo produtos web, SaaS e automações com React, TypeScript, Node.js e IA.
+I build and run SaaS products end to end in TypeScript: React and Next.js on the front, Node.js and PostgreSQL on the back, and the parts in between that keep a product running after launch — auth, billing, background jobs, tests, CI and monitoring. Based in Brazil (UTC−3), working remotely.
 
-[LinkedIn](https://www.linkedin.com/in/gabrielmouram/) · [Email](mailto:gabrielmouramendes@hotmail.com)
+## What I build
 
-<br />
+- **SaaS platforms** — multi-tenant data models, workspaces, roles and row-level security
+- **APIs** — REST APIs in Node.js (Fastify), validated with Zod, backed by PostgreSQL
+- **Real-time features** — Socket.IO and Redis for live state, BullMQ for background work
+- **AI integrations** — LLM workflows with OpenAI and Anthropic models, LangGraph orchestration, RAG with pgvector
+- **Automation** — queues, scheduled tasks and third-party integrations (payments, tax invoicing, email, file storage)
 
-### Sobre
+## Tech stack
 
-Meu trabalho passa pela interface, pelas APIs e pelos dados que sustentam um produto. Costumo lidar com fluxos de gestão, integrações entre serviços e funcionalidades em tempo real. Tenho interesse especial em usar automações e agentes de IA para simplificar o trabalho de quem usa esses sistemas.
+| Area | Tools |
+|---|---|
+| Languages | TypeScript, JavaScript, SQL |
+| Frontend | React, Next.js, Tailwind CSS, Zustand, TanStack Query, Framer Motion |
+| Backend | Node.js, Fastify, REST APIs, Socket.IO, BullMQ, Zod |
+| Data | PostgreSQL, Prisma, Supabase (Auth, RLS, Edge Functions), Redis, pgvector |
+| AI | OpenAI API, Anthropic API, LangGraph / LangChain, Vercel AI SDK |
+| Auth & billing | Clerk, Supabase Auth, Stripe |
+| Testing | Vitest, Playwright, Testing Library |
+| Infra & ops | Docker, GitHub Actions, Prometheus, Grafana, Sentry, Railway, Oracle Cloud |
 
-<br />
+## Featured project — CRN
 
-### Projetos selecionados
+**Live:** [appcrn.com.br](https://www.appcrn.com.br) (site in Portuguese) · built and run solo
 
-#### CRN
+A multi-tenant ERP for brick-and-mortar retailers in Brazil: point of sale, inventory, finance and tax invoicing in one product. Paying customers since late 2023; merchants run about **BRL 2M (~US$380K) in sales and 4,000–8,000 tax invoices a month** through it.
 
-ERP para o varejo físico: vendas, estoque, financeiro e emissão fiscal no mesmo fluxo. Uma aplicação multi-tenant para organizar a operação de diferentes negócios.
+- Replaced the separate tax-invoicing and management systems store owners used with a single product
+- Redesigned the hardest areas — tax rules, tax calculation, margin calculation — so owners can run them without specialist help, which cut support requests
+- Brought onboarding plus data import down from ~3 hours to ~45 minutes per customer
+- React, TypeScript, Supabase/PostgreSQL with row-level security and Edge Functions, plus a Dockerized invoice service on Oracle Cloud that talks directly to Brazil's tax authority (SEFAZ); Vitest, Playwright and GitHub Actions CI
 
-<sub>React · Supabase · PostgreSQL &nbsp; / &nbsp; Repositório privado</sub>
+## Featured project — AgentOffice
 
-<br />
+**Live:** [useagentoffice.com](https://useagentoffice.com) (early access, Portuguese-language market)
 
-#### AgentOffice
+**The problem:** using AI at work still means re-explaining your company in every chat, stitching together outputs by hand and having no record of what the model did or where it got its facts.
 
-Plataforma SaaS em que agentes de IA colaboram em tempo real. Reúne orquestração de agentes e fluxos automatizados com integrações a serviços externos.
+**What I built:** a SaaS where a team of AI agents researches, writes and analyzes using the company's own context. Documents, Notion and Google Drive form a shared "Company Brain"; agents hand work to each other, a virtual office shows in real time what each one is doing, and nothing is published (for example, to LinkedIn) without human approval. Each workspace's data is isolated, and every task and day has a credit cap.
 
-<sub>React · Node.js · PostgreSQL · Redis · WebSockets &nbsp; / &nbsp; Repositório privado</sub>
+**Architecture**
 
-<br />
+```
+Next.js (React) ──REST──▶ Fastify API ──▶ PostgreSQL + pgvector (Prisma)
+       ▲                       │
+       └──── Socket.IO ◀───────┤──▶ Redis ──▶ BullMQ workers
+                               │              (task execution, file analysis, RAG indexing)
+                               └──▶ LLM providers (OpenAI, Anthropic) via LangGraph
+```
 
-#### [Mini CRM SDR](https://github.com/GabrielMMoura/mini-crm-sdr-ai)
+- **AI:** multi-agent orchestration with LangGraph across OpenAI and Anthropic models; RAG over files, Notion and Google Drive with pgvector; per-agent memory of user preferences
+- **Real-time:** agent state and task events pushed over Socket.IO, with an output guard on what reaches the client
+- **Billing:** Stripe subscriptions plus credit packs, per-task and daily credit caps, usage tracked per agent and model; webhook handling covered by tests
+- **Auth:** Clerk, synced to the app's users and workspaces through webhooks
+- **Quality:** GitHub Actions runs lint, type checks, Vitest suites and builds against a real Postgres/pgvector service; Playwright covers the main web flows
+- **Observability:** Prometheus metrics (including BullMQ queue metrics), Grafana dashboards, Sentry
 
-CRM para organizar a prospecção comercial, com funil Kanban, campanhas e mensagens personalizadas com IA. Os dados de cada organização são separados com Supabase RLS.
+The source is private.
 
-<sub>TypeScript · Supabase · IA &nbsp; / &nbsp; <a href="https://github.com/GabrielMMoura/mini-crm-sdr-ai">Ver código</a></sub>
+## Other projects
 
-<br />
+- **[Mini CRM SDR](https://github.com/GabrielMMoura/mini-crm-sdr-ai)** — CRM for sales development teams: Kanban pipeline with per-stage rules, outreach campaigns and AI-generated messages. Supabase with row-level security per workspace; each user's OpenAI key is encrypted (AES-GCM) inside an Edge Function and never returned to the browser. [Live demo](https://mini-crm-sdr-ai-vercel.vercel.app)
 
-### Tecnologias
+## Engineering focus
 
-<p>
-<img src="./assets/icons/react.svg" width="24" height="24" alt="React" title="React" /> &nbsp;
-<img src="./assets/icons/typescript.svg" width="24" height="24" alt="TypeScript" title="TypeScript" /> &nbsp;
-<img src="./assets/icons/nodejs.svg" width="24" height="24" alt="Node.js" title="Node.js" /> &nbsp;
-<img src="./assets/icons/postgresql.svg" width="24" height="24" alt="PostgreSQL" title="PostgreSQL" /> &nbsp;
-<img src="./assets/icons/supabase.svg" width="24" height="24" alt="Supabase" title="Supabase" /> &nbsp;
-<img src="./assets/icons/docker.svg" width="24" height="24" alt="Docker" title="Docker" />
-</p>
+- Data models first: get tenancy, permissions and constraints right in the database
+- API design that is hard to misuse — typed contracts and validation at the boundary
+- Authentication and authorization, including row-level security
+- Tests around money, permissions and anything async
+- Performance where it matters: queues for slow work, caching for repeated work
+- Code that the next person (often me, six months later) can change safely
 
-React · Next.js · TypeScript · Tailwind CSS · Node.js  
-PostgreSQL · Supabase · Docker · GitHub Actions · APIs de IA
+## Contact
 
-<br />
-
-### Contribuições
-
-<a href="https://github.com/GabrielMMoura?tab=overview">
-<picture>
-<source media="(max-width: 600px)" srcset="./assets/contributions-mobile.svg" />
-<img src="./assets/contributions.svg" width="960" alt="Calendário de contribuições de Gabriel Moura" />
-</picture>
-</a>
-
-<sub><a href="https://github.com/GabrielMMoura?tab=overview">Atividade no GitHub</a> · <a href="https://github.com/GabrielMMoura/mini-crm-sdr-ai/commits">Commits do Mini CRM</a></sub>
-
-<br />
-
-<details>
-<summary>Conquistas no GitHub</summary>
-<br />
-<a href="https://github.com/GabrielMMoura?tab=achievements"><img src="./assets/pull-shark.png" width="48" alt="Pull Shark — prata" title="Pull Shark" /> <img src="./assets/pair-extraordinaire.png" width="48" alt="Pair Extraordinaire — prata" title="Pair Extraordinaire" /> <img src="./assets/yolo.png" width="48" alt="YOLO" title="YOLO" /></a>
-<br />
-<sub>Pull Shark · Pair Extraordinaire · YOLO</sub>
-</details>
-
-<!-- Conquistas conferidas no perfil em 18/09/2026; atualizar quando houver novos emblemas. -->
-
-<br />
-
-Vamos construir algo útil.
-
-[Email](mailto:gabrielmouramendes@hotmail.com) · [LinkedIn](https://www.linkedin.com/in/gabrielmouram/)
+[LinkedIn — in/gabrielmouram](https://www.linkedin.com/in/gabrielmouram)
